@@ -1,0 +1,12 @@
+E:\Programming\Web applications\I-Andreeva\Project\Domain\bin\Debug\net8.0\Domain.deps.json
+E:\Programming\Web applications\I-Andreeva\Project\Domain\bin\Debug\net8.0\Domain.dll
+E:\Programming\Web applications\I-Andreeva\Project\Domain\bin\Debug\net8.0\Domain.pdb
+E:\Programming\Web applications\I-Andreeva\Project\Domain\obj\Debug\net8.0\Domain.GeneratedMSBuildEditorConfig.editorconfig
+E:\Programming\Web applications\I-Andreeva\Project\Domain\obj\Debug\net8.0\Domain.AssemblyInfoInputs.cache
+E:\Programming\Web applications\I-Andreeva\Project\Domain\obj\Debug\net8.0\Domain.AssemblyInfo.cs
+E:\Programming\Web applications\I-Andreeva\Project\Domain\obj\Debug\net8.0\Domain.csproj.CoreCompileInputs.cache
+E:\Programming\Web applications\I-Andreeva\Project\Domain\obj\Debug\net8.0\Domain.sourcelink.json
+E:\Programming\Web applications\I-Andreeva\Project\Domain\obj\Debug\net8.0\Domain.dll
+E:\Programming\Web applications\I-Andreeva\Project\Domain\obj\Debug\net8.0\refint\Domain.dll
+E:\Programming\Web applications\I-Andreeva\Project\Domain\obj\Debug\net8.0\Domain.pdb
+E:\Programming\Web applications\I-Andreeva\Project\Domain\obj\Debug\net8.0\ref\Domain.dll
