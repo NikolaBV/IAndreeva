@@ -15,10 +15,19 @@ git clone https://github.com/NikolaBV/I-Andreeva.git\
 ```
 
 Then run the backend
-_Not yet implemented_
+
+```bash
+cd .\Project\API\
+dotnet watch
+```
 
 And start the client
-_Not yet implemented_
+
+```bash
+cd .\Project\client-app\
+npm install
+npm start
+```
 
 ## Contributing
 
