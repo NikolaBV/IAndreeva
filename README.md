@@ -27,4 +27,4 @@ I will review your work and if it's a valid contribution to the project that's a
 
 ## Contact
 
-You can contact me through email or linkedin, the links are in my profile
+You can contact me through email or linkedin, the links are in my profile.
