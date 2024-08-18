@@ -12,7 +12,7 @@ namespace Application.Posts
             public Guid Id { get; set; }
         }
 
-        public class Handler : IRequestHandler<Query, Post>
+        public class Handler : IRequestHandler<Query, Post> //First parameter is the query and second what we are returning
         {
             private readonly DataContext _context;
             public Handler(DataContext context)
