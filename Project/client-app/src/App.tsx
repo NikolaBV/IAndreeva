@@ -1,26 +1,41 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-import { List, Typography } from "antd";
+import { useQuery } from "@tanstack/react-query";
+import "./styles/index.css";
+import Post from "./Post";
+import { Col, Row } from "antd";
+import { PostModel } from "./api/models";
+import Title from "antd/es/skeleton/Title";
 
 export default function App() {
-  const [posts, setPosts] = useState([]);
-  useEffect(() => {
-    axios.get("http://localhost:5000/api/posts/").then((response) => {
-      setPosts(response.data);
-    });
-  }, []);
+  const postsQuery = useQuery({
+    queryKey: ["posts"],
+    queryFn: () => axios.get("http://localhost:5000/api/posts/"),
+  });
+
+  if (postsQuery.isLoading) {
+    return <div>Loading...</div>;
+  }
   return (
     <>
-      <List
-        header={<div>Header</div>}
-        footer={<div>Footer</div>}
-        dataSource={posts}
-        renderItem={(post: any) => (
-          <List.Item>
-            <Typography.Text>{post.title}</Typography.Text>
-          </List.Item>
-        )}
-      />
+      <div style={{ display: "flex", flexDirection: "row" }}>
+        <Col
+          style={{
+            height: "100vh",
+            width: "70%",
+            marginRight: "0.5rem",
+          }}
+        >
+          {postsQuery.data?.data?.map((post: PostModel) => (
+            <Post
+              id={post.id}
+              title={post.title}
+              description={post.description}
+              createdAt={new Date(post.createdAt)}
+            ></Post>
+          ))}
+        </Col>
+        <Col style={{ width: "30%", height: "100vh" }}></Col>
+      </div>
     </>
   );
 }
