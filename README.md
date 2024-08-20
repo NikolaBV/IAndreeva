@@ -32,7 +32,7 @@ npm start
 ## Contributing
 
 Feel free to fork this repository, report issues, fix bugs, add features.
-I will review your work and if it's a valid contribution to the project that's all that matters!
+I will review your work and if it's a valid contribution to the project that's all that matters.
 
 ## Contact
 
