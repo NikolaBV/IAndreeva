@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import "./styles/index.css";
-import Post from "./Post";
+import Post from "./PostCard";
 import { Col } from "antd";
 import { PostModel } from "./api/models";
 
