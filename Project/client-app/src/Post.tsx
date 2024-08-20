@@ -1,4 +1,4 @@
-import { Card, Row } from "antd";
+import { Row } from "antd";
 import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
 

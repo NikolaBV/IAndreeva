@@ -2,9 +2,8 @@ import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import "./styles/index.css";
 import Post from "./Post";
-import { Col, Row } from "antd";
+import { Col } from "antd";
 import { PostModel } from "./api/models";
-import Title from "antd/es/skeleton/Title";
 
 export default function App() {
   const postsQuery = useQuery({
