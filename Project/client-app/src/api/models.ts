@@ -6,3 +6,9 @@ export interface PostModel {
   createdAt: Date;
   updatedAt: Date;
 }
+
+export interface CreatePostModel {
+  title: string;
+  description: string;
+  htmlContent: string;
+}
