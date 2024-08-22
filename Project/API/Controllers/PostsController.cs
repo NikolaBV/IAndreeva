@@ -23,7 +23,7 @@ namespace API.Controllers
         public async Task<IActionResult> CreatePost(Post post)
         {
             await Mediator.Send(new Create.Command { Post = post });
-            return Ok();
+            return Ok(post.Id);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> EditPost(Guid id, Post post)

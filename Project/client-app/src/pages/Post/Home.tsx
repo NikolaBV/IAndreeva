@@ -3,7 +3,6 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { PostModel } from "../../api/models";
 import { useEffect } from "react";
-import Navbar from "../../components/Navbar";
 
 export default function PostDetail() {
   const params = useParams<{ id: string }>();
@@ -18,7 +17,6 @@ export default function PostDetail() {
 
   return (
     <>
-      <Navbar></Navbar>
       <div>
         {postQuery.isLoading ? (
           <div>Loading...</div>
