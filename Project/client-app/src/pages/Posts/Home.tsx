@@ -7,7 +7,7 @@ import Post from "./components/PostCard";
 export default function Posts() {
   const postsQuery = useQuery({
     queryKey: ["posts"],
-    queryFn: () => axios.get("http://localhost:5000/api/posts/"),
+    queryFn: async () => axios.get("http://localhost:5000/api/posts/"),
   });
 
   if (postsQuery.isLoading) {
