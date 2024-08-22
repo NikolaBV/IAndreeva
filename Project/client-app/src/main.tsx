@@ -6,6 +6,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import PostDetail from "./pages/Post/Home.tsx";
 import CreatePost from "./pages/Post/components/CreatePost.tsx";
 import PageLayout from "./components/PageLayout.tsx";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ createRoot(document.getElementById("root")!).render(
           </Routes>
         </PageLayout>
       </BrowserRouter>
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   </StrictMode>
 );
