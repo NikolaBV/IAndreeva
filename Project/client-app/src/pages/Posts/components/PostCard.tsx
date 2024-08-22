@@ -23,7 +23,7 @@ export default function Post({ id, title, description, createdAt }: Props) {
   const deletePost = useMutation({
     mutationKey: ["deletePost"],
     mutationFn: async (id: string) => {
-      axios.delete(`http://localhost:5000/api/posts/${id}`);
+      await axios.delete(`http://localhost:5000/api/posts/${id}`);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
