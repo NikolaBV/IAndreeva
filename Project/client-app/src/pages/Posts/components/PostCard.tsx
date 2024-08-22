@@ -1,7 +1,15 @@
-import { Row } from "antd";
+import { Popconfirm, Row, Tooltip } from "antd";
 import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
 import { Link } from "react-router-dom";
+import { DeleteOutlined } from "@ant-design/icons";
+import {
+  QueryClient,
+  useMutation,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { DeletePostModel } from "../../../api/models";
+import axios from "axios";
 
 interface Props {
   id: string;
@@ -11,33 +19,64 @@ interface Props {
 }
 
 export default function Post({ id, title, description, createdAt }: Props) {
+  const queryClient = useQueryClient();
+  const deletePost = useMutation({
+    mutationKey: ["deletePost"],
+    mutationFn: async (id: string) => {
+      axios.delete(`http://localhost:5000/api/posts/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    },
+  });
+  const handleDelete = () => {
+    deletePost.mutate(id);
+  };
   return (
     <Row
       style={{
         width: "100%",
-        height: "30%",
+        height: "auto",
         boxShadow: "rgba(0, 0, 0, 0.35) 0px 5px 15px",
         margin: "1rem",
+        position: "relative",
+        padding: "1rem",
       }}
     >
+      <Tooltip title="Delete post">
+        <Popconfirm
+          title="Delete the task"
+          description="Are you sure to delete this post?"
+          okText="Yes"
+          cancelText="No"
+          onConfirm={handleDelete}
+        >
+          <DeleteOutlined
+            style={{
+              position: "absolute",
+              top: "1rem",
+              right: "1rem",
+              cursor: "pointer",
+            }}
+          />
+        </Popconfirm>
+      </Tooltip>
+
       <div
         style={{
           display: "flex",
           flexDirection: "column",
-          padding: "1rem",
         }}
       >
-        <div>
-          <Link to={`/post/${id}`}>
-            <Title style={{ color: "black" }} level={2}>
-              {title}
-            </Title>
-          </Link>
-          <Paragraph style={{ color: "black" }}>{description}</Paragraph>
-          <Paragraph style={{ color: "black" }}>
-            {createdAt.toDateString()}
-          </Paragraph>
-        </div>
+        <Link to={`/post/${id}`}>
+          <Title style={{ color: "black" }} level={2}>
+            {title}
+          </Title>
+        </Link>
+        <Paragraph style={{ color: "black" }}>{description}</Paragraph>
+        <Paragraph style={{ color: "black" }}>
+          {createdAt.toDateString()}
+        </Paragraph>
       </div>
     </Row>
   );
