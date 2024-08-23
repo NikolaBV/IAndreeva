@@ -3208,11 +3208,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Programming\\Web applications\\I-Andreeva\\Project\\API\\API.csproj",
+      "projectUniqueName": "E:\\Programming\\Web applications\\IAndreeva\\Project\\API\\API.csproj",
       "projectName": "API",
-      "projectPath": "E:\\Programming\\Web applications\\I-Andreeva\\Project\\API\\API.csproj",
+      "projectPath": "E:\\Programming\\Web applications\\IAndreeva\\Project\\API\\API.csproj",
       "packagesPath": "C:\\Users\\nikol\\.nuget\\packages\\",
-      "outputPath": "E:\\Programming\\Web applications\\I-Andreeva\\Project\\API\\obj\\",
+      "outputPath": "E:\\Programming\\Web applications\\IAndreeva\\Project\\API\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\nikol\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3229,8 +3229,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "E:\\Programming\\Web applications\\I-Andreeva\\Project\\Application\\Application.csproj": {
-              "projectPath": "E:\\Programming\\Web applications\\I-Andreeva\\Project\\Application\\Application.csproj"
+            "E:\\Programming\\Web applications\\IAndreeva\\Project\\Application\\Application.csproj": {
+              "projectPath": "E:\\Programming\\Web applications\\IAndreeva\\Project\\Application\\Application.csproj"
             }
           }
         }

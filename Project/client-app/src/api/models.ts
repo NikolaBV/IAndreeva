@@ -15,3 +15,9 @@ export interface CreatePostModel {
 export interface DeletePostModel {
   id: string;
 }
+export interface EditPostModel {
+  id: string;
+  title: string;
+  description: string;
+  htmlContent: string;
+}

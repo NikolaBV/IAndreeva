@@ -1207,11 +1207,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "E:\\Programming\\Web applications\\I-Andreeva\\Project\\Persistence\\Persistence.csproj",
+      "projectUniqueName": "E:\\Programming\\Web applications\\IAndreeva\\Project\\Persistence\\Persistence.csproj",
       "projectName": "Persistence",
-      "projectPath": "E:\\Programming\\Web applications\\I-Andreeva\\Project\\Persistence\\Persistence.csproj",
+      "projectPath": "E:\\Programming\\Web applications\\IAndreeva\\Project\\Persistence\\Persistence.csproj",
       "packagesPath": "C:\\Users\\nikol\\.nuget\\packages\\",
-      "outputPath": "E:\\Programming\\Web applications\\I-Andreeva\\Project\\Persistence\\obj\\",
+      "outputPath": "E:\\Programming\\Web applications\\IAndreeva\\Project\\Persistence\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\nikol\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -1228,8 +1228,8 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "projectReferences": {
-            "E:\\Programming\\Web applications\\I-Andreeva\\Project\\Domain\\Domain.csproj": {
-              "projectPath": "E:\\Programming\\Web applications\\I-Andreeva\\Project\\Domain\\Domain.csproj"
+            "E:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\Domain.csproj": {
+              "projectPath": "E:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\Domain.csproj"
             }
           }
         }

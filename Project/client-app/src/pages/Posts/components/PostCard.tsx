@@ -57,6 +57,7 @@ export default function Post({ id, title, description, createdAt }: Props) {
               top: "1rem",
               right: "1rem",
               cursor: "pointer",
+              fontSize: "1.5rem",
             }}
           />
         </Popconfirm>

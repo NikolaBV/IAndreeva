@@ -1,6 +1,4 @@
 using API.Extensions;
-using Application.Core;
-using Application.Posts;
 using Microsoft.EntityFrameworkCore;
 using Persistence;
 
