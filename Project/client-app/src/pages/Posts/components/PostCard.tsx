@@ -3,12 +3,7 @@ import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
 import { Link } from "react-router-dom";
 import { DeleteOutlined } from "@ant-design/icons";
-import {
-  QueryClient,
-  useMutation,
-  useQueryClient,
-} from "@tanstack/react-query";
-import { DeletePostModel } from "../../../api/models";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 
 interface Props {
