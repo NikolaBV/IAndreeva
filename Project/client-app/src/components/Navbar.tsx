@@ -12,14 +12,6 @@ export default function Navbar() {
       key: "1",
       label: "Home",
     },
-    {
-      key: "2",
-      label: "About",
-    },
-    {
-      key: "3",
-      label: "Contact",
-    },
   ];
 
   return (

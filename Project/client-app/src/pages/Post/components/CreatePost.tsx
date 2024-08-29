@@ -1,10 +1,11 @@
 import { useMutation } from "@tanstack/react-query";
-import { Button, Form, FormProps, Input, message } from "antd";
+import { Button, Form, Input, message } from "antd";
 import JoditEditor from "jodit-react";
 import { useMemo, useRef, useState } from "react";
 import { CreatePostModel } from "../../../api/models";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import "../../../styles/index.css";
 
 export default function CreatePost() {
   const editor = useRef<any>(null);
@@ -44,7 +45,6 @@ export default function CreatePost() {
     []
   );
 
-  // Define form values type
   type FormValues = Omit<CreatePostModel, "htmlContent"> & {
     htmlContent: string;
   };
@@ -56,13 +56,6 @@ export default function CreatePost() {
       htmlContent: values.htmlContent,
     });
     message.success("Post created successfully");
-    //navigate(`/post/${id}`);
-  };
-
-  const onFinishFailed: FormProps<FormValues>["onFinishFailed"] = (
-    errorInfo
-  ) => {
-    console.log("Failed:", errorInfo);
   };
 
   const createPost = useMutation({
@@ -71,54 +64,51 @@ export default function CreatePost() {
       return axios.post("http://localhost:5000/api/posts", model);
     },
     onSuccess: (response) => {
-      console.log(response);
       navigate(`/post/${response?.data}`);
     },
   });
 
   return (
-    <>
-      <div style={{ marginTop: "2rem " }}>
-        <Form<FormValues>
-          onFinish={onFinish}
-          onFinishFailed={onFinishFailed}
-          autoComplete="off"
+    <div className="create-post-container">
+      <Form<FormValues> onFinish={onFinish} autoComplete="off">
+        <Form.Item
+          name="title"
+          rules={[{ required: true, message: "Title is required" }]}
         >
-          <Form.Item name="title">
-            <Input.TextArea
-              required={true}
-              placeholder="Give it a title"
-              style={{
-                fontSize: "20px",
-                width: "100%",
-                marginBottom: "0.5rem",
-              }}
-            />
-          </Form.Item>
-          <Form.Item name="description">
-            <Input.TextArea
-              placeholder="Describe it"
-              required={true}
-              style={{
-                fontSize: "20px",
-                width: "100%",
-                marginBottom: "0.5rem",
-              }}
-            />
-          </Form.Item>
-          <Form.Item name="htmlContent" initialValue={content}>
-            <JoditEditor
-              ref={editor}
-              value={content}
-              config={config}
-              onBlur={(newContent) => setContent(newContent)}
-            />
-          </Form.Item>
-          <Button type="primary" htmlType="submit">
-            Create post
-          </Button>
-        </Form>
-      </div>
-    </>
+          <Input.TextArea
+            placeholder="Give it a title"
+            style={{
+              fontSize: "20px",
+              width: "100%",
+              marginBottom: "0.5rem",
+            }}
+          />
+        </Form.Item>
+        <Form.Item
+          name="description"
+          rules={[{ required: true, message: "Description is required" }]}
+        >
+          <Input.TextArea
+            placeholder="Describe it"
+            style={{
+              fontSize: "20px",
+              width: "100%",
+              marginBottom: "0.5rem",
+            }}
+          />
+        </Form.Item>
+        <Form.Item name="htmlContent" initialValue={content}>
+          <JoditEditor
+            ref={editor}
+            value={content}
+            config={config}
+            onBlur={(newContent) => setContent(newContent)}
+          />
+        </Form.Item>
+        <Button type="primary" htmlType="submit">
+          Create post
+        </Button>
+      </Form>
+    </div>
   );
 }
