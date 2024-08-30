@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { Col } from "antd";
-import axios from "axios";
+import { Col, Spin } from "antd";
+import axios, { Axios, AxiosError } from "axios";
 import { PostModel } from "../../api/models";
 import Post from "./components/PostCard";
 import agent from "../../api/agent";
@@ -9,15 +9,15 @@ export default function Posts() {
   const postsQuery = useQuery({
     queryKey: ["posts"],
     queryFn: async () => agent.Posts.list(),
-    onSuccess: (data) => {
+    onSuccess: (data: PostModel[]) => {
       console.log(data);
     },
-    onError: (error) => {
+    onError: (error: AxiosError) => {
       console.error("Error fetching posts:", error);
     },
   });
   if (postsQuery.isLoading) {
-    return <div>Loading...</div>;
+    return <Spin spinning={postsQuery.isLoading} fullscreen></Spin>;
   }
   if (postsQuery.isError) {
     return <div>Error...</div>;

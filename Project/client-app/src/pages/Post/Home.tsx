@@ -10,6 +10,7 @@ import { Form, Input, Tooltip, Button } from "antd";
 import HtmlEditor from "./HtmlEditor";
 import parse from "html-react-parser";
 import "../../styles/index.css";
+import agent from "../../api/agent";
 
 export default function PostDetail() {
   const params = useParams<{ id: string }>();
@@ -19,16 +20,16 @@ export default function PostDetail() {
 
   const postQuery = useQuery({
     queryKey: ["post", params.id],
-    queryFn: () => axios.get(`http://localhost:5000/api/posts/${params.id}`),
-    onSuccess: (data) => {
-      setContent((data as PostModel).htmlContent);
+    queryFn: () => agent.Posts.details(params.id as string),
+    onSuccess: (data: PostModel) => {
+      setContent(data.htmlContent);
     },
   });
 
   const editPost = useMutation({
     mutationKey: ["editPost"],
     mutationFn: async (model: EditPostModel) => {
-      await axios.put(`http://localhost:5000/api/posts/${params.id}`, model);
+      await agent.Posts.edit(model.id, model);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["post"] });
@@ -72,13 +73,13 @@ export default function PostDetail() {
 
   useEffect(() => {
     if (postQuery.data) {
-      setContent(postQuery.data.data.htmlContent);
+      setContent(postQuery.data.htmlContent);
     }
   }, [postQuery.data]);
 
   const handleSaveChanges = (values: any) => {
     editPost.mutate({
-      id: postQuery.data?.data.id,
+      id: postQuery.data?.id,
       title: values.title,
       description: values.description,
       htmlContent: content,
@@ -91,7 +92,9 @@ export default function PostDetail() {
     <div className="post-detail-container">
       {postQuery.isLoading ? (
         <div>Loading...</div>
-      ) : (
+      ) : postQuery.isError ? (
+        <div>Error loading post...</div>
+      ) : postQuery.data ? (
         <div className="post-detail-content">
           <div className="post-detail-header">
             <span className="edit-icon">
@@ -117,7 +120,7 @@ export default function PostDetail() {
               <Form style={{ width: "100%" }} onFinish={handleSaveChanges}>
                 <Form.Item
                   name="title"
-                  initialValue={(postQuery.data?.data as PostModel).title}
+                  initialValue={postQuery.data.title}
                   rules={[{ required: true, message: "Title is required" }]}
                 >
                   <Input.TextArea
@@ -135,7 +138,7 @@ export default function PostDetail() {
 
                 <Form.Item
                   name="description"
-                  initialValue={(postQuery.data?.data as PostModel).description}
+                  initialValue={postQuery.data.description}
                   rules={[
                     { required: true, message: "Description is required" },
                   ]}
@@ -155,7 +158,7 @@ export default function PostDetail() {
                   <HtmlEditor
                     editor={editor}
                     config={config}
-                    content={postQuery.data?.data.htmlContent || ""}
+                    content={postQuery.data.htmlContent || ""}
                     setContent={setContent}
                   />
                 </Form.Item>
@@ -167,18 +170,20 @@ export default function PostDetail() {
             ) : (
               <>
                 <Title level={1} className="post-title">
-                  {(postQuery.data?.data as PostModel).title}
+                  {postQuery.data.title}
                 </Title>
                 <Paragraph className="post-description">
-                  {(postQuery.data?.data as PostModel).description}
+                  {postQuery.data.description}
                 </Paragraph>
                 <div className="post-content">
-                  {parse(postQuery.data?.data.htmlContent)}
+                  {parse(postQuery.data.htmlContent)}
                 </div>
               </>
             )}
           </div>
         </div>
+      ) : (
+        <div>Post not found.</div>
       )}
     </div>
   );
