@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import agent from "../../../api/agent";
 
 interface Props {
   id: string;
@@ -15,10 +16,11 @@ interface Props {
 
 export default function Post({ id, title, description, createdAt }: Props) {
   const queryClient = useQueryClient();
+
   const deletePost = useMutation({
     mutationKey: ["deletePost"],
     mutationFn: async (id: string) => {
-      await axios.delete(`http://localhost:5000/api/posts/${id}`);
+      await agent.Posts.delete(id);
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
@@ -71,7 +73,7 @@ export default function Post({ id, title, description, createdAt }: Props) {
         </Link>
         <Paragraph style={{ color: "black" }}>{description}</Paragraph>
         <Paragraph style={{ color: "black" }}>
-          {createdAt.toDateString()}
+          {createdAt.toLocaleString()}
         </Paragraph>
       </div>
     </Row>

@@ -6,6 +6,7 @@ import { CreatePostModel } from "../../../api/models";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/index.css";
+import agent from "../../../api/agent";
 
 export default function CreatePost() {
   const editor = useRef<any>(null);
@@ -61,10 +62,10 @@ export default function CreatePost() {
   const createPost = useMutation({
     mutationKey: ["createPost"],
     mutationFn: (model: CreatePostModel) => {
-      return axios.post("http://localhost:5000/api/posts", model);
+      return agent.Posts.create(model);
     },
     onSuccess: (response) => {
-      navigate(`/post/${response?.data}`);
+      navigate(`/post/${response}`);
     },
   });
 

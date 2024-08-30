@@ -12,6 +12,7 @@ export interface CreatePostModel {
   description: string;
   htmlContent: string;
 }
+
 export interface DeletePostModel {
   id: string;
 }
