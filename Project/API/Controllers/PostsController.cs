@@ -1,3 +1,4 @@
+using System.Reflection.Metadata;
 using Application.Posts;
 using Domain;
 using MediatR;
@@ -10,33 +11,31 @@ namespace API.Controllers
     public class PostsController : BaseAPIController
     {
         [HttpGet]
-        public async Task<ActionResult<List<Post>>> GetPosts()
+        public async Task<IActionResult> GetPosts()
         {
-            return await Mediator.Send(new List.Query());
+            return HandleResult(await Mediator.Send(new List.Query()));
         }
         [HttpGet("{id}")]
-        public async Task<ActionResult<Post>> GetPost(Guid id)
+        public async Task<IActionResult> GetPost(Guid id)
         {
-            return await Mediator.Send(new Details.Query { Id = id });
+            return HandleResult(await Mediator.Send(new Details.Query { Id = id }));
         }
         [HttpPost]
         public async Task<IActionResult> CreatePost(Post post)
         {
-            await Mediator.Send(new Create.Command { Post = post });
+            HandleResult(await Mediator.Send(new Create.Command { Post = post }));
             return Ok(post.Id);
         }
         [HttpPut("{id}")]
         public async Task<IActionResult> EditPost(Guid id, Post post)
         {
             post.Id = id;
-            await Mediator.Send(new Edit.Command { Post = post });
-            return Ok();
+            return HandleResult(await Mediator.Send(new Edit.Command { Post = post }));
         }
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeletePost(Guid id)
         {
-            await Mediator.Send(new Delete.Command { Id = id });
-            return Ok();
+            return HandleResult(await Mediator.Send(new Delete.Command { Id = id }));
         }
 
     }

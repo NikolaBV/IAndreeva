@@ -1,16 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
 import { useParams } from "react-router-dom";
-import { EditPostModel, PostModel } from "../../api/models";
 import { useState, useMemo, useRef, useEffect } from "react";
+import { CloseOutlined, EditOutlined } from "@ant-design/icons";
+import { Form, Input, Tooltip, Button, Skeleton } from "antd";
 import Title from "antd/es/typography/Title";
 import Paragraph from "antd/es/typography/Paragraph";
-import { CloseOutlined, EditOutlined } from "@ant-design/icons";
-import { Form, Input, Tooltip, Button } from "antd";
-import HtmlEditor from "./HtmlEditor";
 import parse from "html-react-parser";
 import "../../styles/index.css";
 import agent from "../../api/agent";
+import PostNotFound from "./components/PostNotFound";
+import HtmlEditor from "./HtmlEditor";
+import PostDetailLoading from "./components/PostLoading";
 
 export default function PostDetail() {
   const params = useParams<{ id: string }>();
@@ -24,6 +24,8 @@ export default function PostDetail() {
     onSuccess: (data: PostModel) => {
       setContent(data.htmlContent);
     },
+    retry: false,
+    refetchOnWindowFocus: false,
   });
 
   const editPost = useMutation({
@@ -88,12 +90,24 @@ export default function PostDetail() {
     setEditing(false);
   };
 
+  if (postQuery.isError) {
+    console.log(postQuery.error.response.status);
+    if (
+      postQuery.error.response.status === 404 ||
+      postQuery.error.response.status === 400
+    ) {
+      return (
+        <div>
+          <PostNotFound />
+        </div>
+      );
+    }
+  }
+
   return (
     <div className="post-detail-container">
       {postQuery.isLoading ? (
-        <div>Loading...</div>
-      ) : postQuery.isError ? (
-        <div>Error loading post...</div>
+        <PostDetailLoading></PostDetailLoading>
       ) : postQuery.data ? (
         <div className="post-detail-content">
           <div className="post-detail-header">

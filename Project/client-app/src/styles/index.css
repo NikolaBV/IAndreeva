@@ -66,3 +66,34 @@ input,
 textarea {
   width: 100%;
 }
+.post-detail-loading {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 2rem;
+  background-color: #f0f2f5;
+}
+
+.post-detail-header {
+  display: flex;
+  justify-content: flex-end;
+  padding: 1rem 0;
+}
+
+.post-detail-body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  overflow: auto;
+}
+
+.post-detail-body .ant-skeleton-paragraph {
+  width: 100%;
+  max-width: 800px;
+}
+
+.ant-skeleton-button {
+  margin: 0;
+}
