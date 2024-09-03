@@ -1,8 +1,32 @@
-import axios, { AxiosResponse } from "axios";
+import axios, { AxiosError, AxiosResponse } from "axios";
 import { CreatePostModel, EditPostModel, PostModel } from "./models";
+import { message } from "antd";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
+axios.interceptors.response.use(
+  async (response) => {
+    return response;
+  },
+  (error: AxiosError) => {
+    const { status } = error.response!;
+    switch (status) {
+      case 400:
+        message.error("Bad request");
+        break;
+      case 401:
+        message.error("Unauthorized");
+        break;
+      case 404:
+        message.error("Not found");
+        break;
+      case 500:
+        message.error("Server error");
+        break;
+    }
+    return Promise.reject(error);
+  }
+);
 
 const reqests = {
   get: <T>(url: string) => axios.get<T>(url).then(responseBody),

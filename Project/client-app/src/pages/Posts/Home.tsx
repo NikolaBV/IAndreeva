@@ -15,12 +15,11 @@ export default function Posts() {
     onError: (error: AxiosError) => {
       console.error("Error fetching posts:", error);
     },
+    refetchOnWindowFocus: false,
+    retry: false,
   });
   if (postsQuery.isLoading) {
     return <Spin spinning={postsQuery.isLoading} fullscreen></Spin>;
-  }
-  if (postsQuery.isError) {
-    return <div>Error...</div>;
   }
   return (
     <>
