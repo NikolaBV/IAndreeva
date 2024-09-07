@@ -21,7 +21,7 @@ namespace Persistence
                     {
                         DisplayName = "Ivana",
                         UserName = "IvanaAndreeva",
-                        Email = "nikolavalkovb@gmail.com"
+                        Email = "ivanandrv@gmail.com "
                     }
                 };
                 foreach (var user in users)
