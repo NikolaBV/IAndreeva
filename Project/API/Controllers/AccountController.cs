@@ -29,7 +29,7 @@ namespace API.Controllers
 
             if (result)
             {
-                return CreateUserObject(user);
+                return await CreateUserObject(user);
             }
             return Unauthorized();
         }
@@ -50,7 +50,7 @@ namespace API.Controllers
             var result = await _userManager.CreateAsync(user, registerDTO.Password);
             if (result.Succeeded)
             {
-                return CreateUserObject(user);
+                return await CreateUserObject(user);
             }
             return BadRequest(result.Errors);
         }
@@ -60,17 +60,17 @@ namespace API.Controllers
         public async Task<ActionResult<UserDTO>> GetCurrentUser()
         {
             var user = await _userManager.FindByEmailAsync(User.FindFirstValue(ClaimTypes.Email));
-            return CreateUserObject(user);
+            return await CreateUserObject(user);
         }
 
 
-        private UserDTO CreateUserObject(AppUser user)
+        private async Task<UserDTO> CreateUserObject(AppUser user)
         {
             return new UserDTO
             {
                 DisplayName = user.DisplayName,
                 Image = null,
-                Token = _tokenService.CreateToken(user),
+                Token = await _tokenService.CreateTokenAsync(user),
                 UserName = user.UserName
             };
         }

@@ -5,29 +5,36 @@ namespace Persistence
 {
     public class Seed
     {
-        public static async Task SeedData(DataContext context, UserManager<AppUser> userManager)
+        public static async Task SeedData(DataContext context,
+        UserManager<AppUser> userManager,
+        RoleManager<IdentityRole> roleManager)
         {
+            if (!roleManager.Roles.Any())
+            {
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
+                await roleManager.CreateAsync(new IdentityRole("User"));
+            }
             if (!userManager.Users.Any())
             {
-                var users = new List<AppUser>
+                var regularUser = new AppUser
                 {
-                    new AppUser
-                    {
-                        DisplayName = "Koko",
-                        UserName = "NikolaBV",
-                        Email = "nikolavalkovb@gmail.com"
-                    },
-                     new AppUser
-                    {
-                        DisplayName = "Ivana",
-                        UserName = "IvanaAndreeva",
-                        Email = "ivanandrv@gmail.com "
-                    }
+                    DisplayName = "Koko",
+                    UserName = "NikolaBV",
+                    Email = "nikolavalkovb@gmail.com"
                 };
-                foreach (var user in users)
+                var adminUser = new AppUser
                 {
-                    await userManager.CreateAsync(user, "Pa$$w0rd");
-                }
+                    DisplayName = "Ivana",
+                    UserName = "IvanaAndreeva",
+                    Email = "ivanandrv@gmail.com"
+                };
+
+                await userManager.CreateAsync(adminUser, "Pa$$w0rd");
+                await userManager.CreateAsync(regularUser, "regulerU$3r");
+
+                await userManager.AddToRoleAsync(adminUser, "Admin");
+                await userManager.AddToRoleAsync(regularUser, "User");
+
             }
             if (context.Posts.Any()) return;
 
