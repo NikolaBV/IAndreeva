@@ -7,6 +7,7 @@ import PostDetail from "./pages/Post/Home.tsx";
 import CreatePost from "./pages/Post/components/CreatePost.tsx";
 import PageLayout from "./components/PageLayout.tsx";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import LoginForm from "./components/users/LoginForm.tsx";
 
 const queryClient = new QueryClient();
 
@@ -22,6 +23,7 @@ createRoot(document.getElementById("root")!).render(
               path="/createPost"
               element={<CreatePost></CreatePost>}
             ></Route>
+            <Route path="/login" element={<LoginForm></LoginForm>} />
           </Routes>
         </PageLayout>
       </BrowserRouter>

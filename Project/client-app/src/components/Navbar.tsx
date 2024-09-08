@@ -34,13 +34,22 @@ export default function Navbar() {
         <Button
           type="primary"
           icon={<PlusOutlined />}
-          style={{ marginLeft: "auto" }}
           onClick={() => {
             setCurrent("");
             navigate("/createPost");
           }}
         >
           Create post
+        </Button>
+        <Button
+          type="primary"
+          style={{ marginLeft: "1rem" }}
+          onClick={() => {
+            setCurrent("");
+            navigate("/login");
+          }}
+        >
+          Login
         </Button>
       </Header>
     </>

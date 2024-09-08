@@ -11,11 +11,13 @@ namespace API.Controllers
 {
     public class PostsController : BaseAPIController
     {
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetPosts()
         {
             return HandleResult(await Mediator.Send(new List.Query()));
         }
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetPost(Guid id)
         {
