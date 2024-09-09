@@ -1,15 +1,25 @@
 import { useQuery } from "@tanstack/react-query";
 import { Col, Spin } from "antd";
-import axios, { Axios, AxiosError } from "axios";
-import { PostModel } from "../../api/models";
+import { AxiosError } from "axios";
+import { PostModel, User } from "../../api/models";
 import Post from "./components/PostCard";
 import agent from "../../api/agent";
+import { useEffect } from "react";
 
 export default function Posts() {
   const postsQuery = useQuery({
     queryKey: ["posts"],
     queryFn: async () => agent.Posts.list(),
-    onSuccess: (data: PostModel[]) => {
+    onError: (error: AxiosError) => {
+      console.error("Error fetching posts:", error);
+    },
+    refetchOnWindowFocus: false,
+    retry: false,
+  });
+  const currentUser = useQuery({
+    queryKey: ["currentUser"],
+    queryFn: async () => agent.Account.current(),
+    onSuccess: (data: User[]) => {
       console.log(data);
     },
     onError: (error: AxiosError) => {

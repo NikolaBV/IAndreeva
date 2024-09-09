@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -19,7 +20,7 @@ namespace API.Controllers
             _tokenService = tokenService;
             _userManager = userManager;
         }
-        [AllowAnonymous]
+
         [HttpPost("login")]
         public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDTO)
         {
@@ -33,7 +34,7 @@ namespace API.Controllers
             }
             return Unauthorized();
         }
-        [AllowAnonymous]
+
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
         {
