@@ -10,6 +10,7 @@ import CreatePost from "./pages/Post/components/CreatePost";
 import PageLayout from "./components/PageLayout";
 import LoginForm from "./components/users/LoginForm";
 import { LoginProvider } from "./context/LoginContext";
+import RegisterForm from "./components/users/RegisterForm";
 
 const queryClient = new QueryClient();
 
@@ -25,6 +26,7 @@ const AppProvider = () => {
                 <Route path="/post/:id" element={<PostDetail />} />
                 <Route path="/createPost" element={<CreatePost />} />
                 <Route path="/login" element={<LoginForm />} />
+                <Route path="/register" element={<RegisterForm />} />
               </Routes>
             </PageLayout>
           </BrowserRouter>

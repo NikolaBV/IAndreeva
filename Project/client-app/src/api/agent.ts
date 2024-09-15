@@ -8,9 +8,17 @@ import {
   User,
 } from "./models";
 import { message } from "antd";
+import { getToken } from "../utils/tokenUtils";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
+axios.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 axios.interceptors.response.use(
   async (response) => {
     return response;
