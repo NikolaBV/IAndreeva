@@ -11,12 +11,23 @@ import agent from "../../api/agent";
 import PostNotFound from "./components/PostNotFound";
 import HtmlEditor from "./HtmlEditor";
 import PostDetailLoading from "./components/PostLoading";
+import { isAdmin } from "../../utils/tokenUtils";
+import { useLoginContext } from "../../hooks/useLoginContext";
 
 export default function PostDetail() {
   const params = useParams<{ id: string }>();
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState(false);
   const [content, setContent] = useState<string>("");
+  const { loggedIn, setLoggedIn } = useLoginContext();
+  const [isAdminUser, setIsAdminUser] = useState(false);
+
+  useEffect(() => {
+    if (loggedIn) {
+      setIsAdminUser(isAdmin());
+    }
+    console.log("Logged in status: ", loggedIn);
+  }, [loggedIn]);
 
   const postQuery = useQuery({
     queryKey: ["post", params.id],
@@ -111,23 +122,25 @@ export default function PostDetail() {
       ) : postQuery.data ? (
         <div className="post-detail-content">
           <div className="post-detail-header">
-            <span className="edit-icon">
-              {editing ? (
-                <Tooltip title="Stop editing">
-                  <CloseOutlined
-                    style={{ cursor: "pointer", fontSize: "1.5rem" }}
-                    onClick={() => setEditing(false)}
-                  />
-                </Tooltip>
-              ) : (
-                <Tooltip title="Edit">
-                  <EditOutlined
-                    style={{ cursor: "pointer", fontSize: "1.5rem" }}
-                    onClick={() => setEditing(true)}
-                  />
-                </Tooltip>
-              )}
-            </span>
+            {isAdminUser && (
+              <span className="edit-icon">
+                {editing ? (
+                  <Tooltip title="Stop editing">
+                    <CloseOutlined
+                      style={{ cursor: "pointer", fontSize: "1.5rem" }}
+                      onClick={() => setEditing(false)}
+                    />
+                  </Tooltip>
+                ) : (
+                  <Tooltip title="Edit">
+                    <EditOutlined
+                      style={{ cursor: "pointer", fontSize: "1.5rem" }}
+                      onClick={() => setEditing(true)}
+                    />
+                  </Tooltip>
+                )}
+              </span>
+            )}
           </div>
           <div className="post-detail-body">
             {editing ? (

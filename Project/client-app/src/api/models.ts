@@ -22,3 +22,19 @@ export interface EditPostModel {
   description: string;
   htmlContent: string;
 }
+export interface User {
+  username: string;
+  displayName: string;
+  token: string;
+  image?: string;
+}
+export interface LoginModel {
+  email: string;
+  password: string;
+}
+export interface RegisterModel {
+  email: string;
+  password: string;
+  displayName: string;
+  userName: string;
+}

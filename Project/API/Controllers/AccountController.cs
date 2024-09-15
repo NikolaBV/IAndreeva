@@ -5,9 +5,11 @@ using Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
+    [AllowAnonymous]
     [ApiController]
     [Route("api/[controller]")]
     public class AccountController : ControllerBase
@@ -19,7 +21,7 @@ namespace API.Controllers
             _tokenService = tokenService;
             _userManager = userManager;
         }
-        [AllowAnonymous]
+
         [HttpPost("login")]
         public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDTO)
         {
@@ -33,13 +35,19 @@ namespace API.Controllers
             }
             return Unauthorized();
         }
-        [AllowAnonymous]
+
         [HttpPost("register")]
         public async Task<ActionResult<UserDTO>> Register(RegisterDTO registerDTO)
         {
-            if (await _userManager.FindByNameAsync(registerDTO.Username) != null)
+            if (await _userManager.Users.AnyAsync(x => x.Email == registerDTO.Email))
             {
-                return BadRequest("Username taken");
+                ModelState.AddModelError("email", "Email Taken");
+                return ValidationProblem();
+            }
+            if (await _userManager.Users.AnyAsync(x => x.UserName == registerDTO.Username))
+            {
+                ModelState.AddModelError("Username", "Username Taken");
+                return ValidationProblem();
             }
             var user = new AppUser
             {

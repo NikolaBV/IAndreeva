@@ -4,8 +4,10 @@ import Title from "antd/es/typography/Title";
 import { Link } from "react-router-dom";
 import { DeleteOutlined } from "@ant-design/icons";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { useEffect, useState } from "react";
 import agent from "../../../api/agent";
+import { isAdmin } from "../../../utils/tokenUtils";
+import { useLoginContext } from "../../../hooks/useLoginContext";
 
 interface Props {
   id: string;
@@ -14,8 +16,16 @@ interface Props {
   createdAt: Date;
 }
 
-export default function Post({ id, title, description, createdAt }: Props) {
+export default function PostCard({ id, title, description, createdAt }: Props) {
   const queryClient = useQueryClient();
+  const { loggedIn, setLoggedIn } = useLoginContext();
+  const [isAdminUser, setIsAdminUser] = useState(false);
+  useEffect(() => {
+    if (loggedIn) {
+      setIsAdminUser(isAdmin());
+    }
+    console.log("Logged in status: ", loggedIn);
+  }, [loggedIn]);
 
   const deletePost = useMutation({
     mutationKey: ["deletePost"],
@@ -26,9 +36,11 @@ export default function Post({ id, title, description, createdAt }: Props) {
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
+
   const handleDelete = () => {
     deletePost.mutate(id);
   };
+
   return (
     <Row
       style={{
@@ -40,32 +52,29 @@ export default function Post({ id, title, description, createdAt }: Props) {
         padding: "1rem",
       }}
     >
-      <Tooltip title="Delete post">
-        <Popconfirm
-          title="Delete the task"
-          description="Are you sure to delete this post?"
-          okText="Yes"
-          cancelText="No"
-          onConfirm={handleDelete}
-        >
-          <DeleteOutlined
-            style={{
-              position: "absolute",
-              top: "1rem",
-              right: "1rem",
-              cursor: "pointer",
-              fontSize: "1.5rem",
-            }}
-          />
-        </Popconfirm>
-      </Tooltip>
+      {isAdminUser && (
+        <Tooltip title="Delete post">
+          <Popconfirm
+            title="Delete the task"
+            description="Are you sure to delete this post?"
+            okText="Yes"
+            cancelText="No"
+            onConfirm={handleDelete}
+          >
+            <DeleteOutlined
+              style={{
+                position: "absolute",
+                top: "1rem",
+                right: "1rem",
+                cursor: "pointer",
+                fontSize: "1.5rem",
+              }}
+            />
+          </Popconfirm>
+        </Tooltip>
+      )}
 
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div style={{ display: "flex", flexDirection: "column" }}>
         <Link to={`/post/${id}`}>
           <Title style={{ color: "black" }} level={2}>
             {title}

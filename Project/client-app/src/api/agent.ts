@@ -1,9 +1,24 @@
 import axios, { AxiosError, AxiosResponse } from "axios";
-import { CreatePostModel, EditPostModel, PostModel } from "./models";
+import {
+  CreatePostModel,
+  EditPostModel,
+  LoginModel,
+  PostModel,
+  RegisterModel,
+  User,
+} from "./models";
 import { message } from "antd";
+import { getToken } from "../utils/tokenUtils";
 
 axios.defaults.baseURL = "http://localhost:5000/api";
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
+axios.interceptors.request.use((config) => {
+  const token = getToken();
+  if (token && config.headers) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
 axios.interceptors.response.use(
   async (response) => {
     return response;
@@ -44,9 +59,16 @@ const Posts = {
     reqests.put<EditPostModel>(`/posts/${id}`, post),
   delete: (id: string) => reqests.delete<PostModel>(`/posts/${id}`),
 };
+const Account = {
+  current: () => reqests.get<User>("/account"),
+  login: (user: LoginModel) => reqests.post<User>("/account/login", user),
+  register: (user: RegisterModel) =>
+    reqests.post<User>("/account/register", user),
+};
 
 const agent = {
   Posts,
+  Account,
 };
 
 export default agent;

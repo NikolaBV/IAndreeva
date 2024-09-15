@@ -1,4 +1,3 @@
-import { Layout } from "antd";
 import Posts from "./pages/Posts/Home";
 import "./styles/index.css";
 
