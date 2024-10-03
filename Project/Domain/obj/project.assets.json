@@ -820,11 +820,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "e:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\Domain.csproj",
+      "projectUniqueName": "E:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\Domain.csproj",
       "projectName": "Domain",
-      "projectPath": "e:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\Domain.csproj",
+      "projectPath": "E:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\Domain.csproj",
       "packagesPath": "C:\\Users\\nikol\\.nuget\\packages\\",
-      "outputPath": "e:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\obj\\",
+      "outputPath": "E:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\nikol\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -847,6 +847,11 @@
         "warnAsError": [
           "NU1605"
         ]
+      },
+      "restoreAuditProperties": {
+        "enableAudit": "true",
+        "auditLevel": "low",
+        "auditMode": "direct"
       }
     },
     "frameworks": {
@@ -874,7 +879,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

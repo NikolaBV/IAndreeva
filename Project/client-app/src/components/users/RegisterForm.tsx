@@ -19,8 +19,8 @@ export default function RegisterForm() {
       setToken(data.token);
       navigate("/");
     },
-    onError: (error: any) => {
-      message.error(error);
+    onError: (error) => {
+      message.error(error.message, 15);
     },
   });
   const handleSubmit = (values: RegisterModel) => {

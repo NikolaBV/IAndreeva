@@ -1,4 +1,5 @@
 using System.Reflection.Metadata;
+using Application.Core;
 using Application.Posts;
 using Domain;
 using MediatR;
@@ -13,9 +14,9 @@ namespace API.Controllers
     {
         [AllowAnonymous]
         [HttpGet]
-        public async Task<IActionResult> GetPosts()
+        public async Task<IActionResult> GetPosts([FromQuery] PagingParams param)
         {
-            return HandleResult(await Mediator.Send(new List.Query()));
+            return HandlePagedResult(await Mediator.Send(new List.Query { Params = param }));
         }
         [AllowAnonymous]
         [HttpGet("{id}")]
