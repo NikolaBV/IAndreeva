@@ -1,10 +1,10 @@
-import Posts from "./pages/Posts/Home";
+import HomePage from "./pages/landing-page/HomePage";
 import "./styles/index.css";
 
 export default function App() {
   return (
     <>
-      <Posts></Posts>
+      <HomePage></HomePage>
     </>
   );
 }

@@ -57,6 +57,7 @@ export default function PostDetail() {
       toolbarSticky: false,
       toolbarAdaptive: false,
       showPlaceholder: false,
+      theme: "dark",
       toolbarButtonSize: "middle" as const,
       buttons: [
         "bold",
@@ -127,14 +128,22 @@ export default function PostDetail() {
                 {editing ? (
                   <Tooltip title="Stop editing">
                     <CloseOutlined
-                      style={{ cursor: "pointer", fontSize: "1.5rem" }}
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "1.5rem",
+                        color: "#f0f0f0",
+                      }}
                       onClick={() => setEditing(false)}
                     />
                   </Tooltip>
                 ) : (
                   <Tooltip title="Edit">
                     <EditOutlined
-                      style={{ cursor: "pointer", fontSize: "1.5rem" }}
+                      style={{
+                        cursor: "pointer",
+                        fontSize: "1.5rem",
+                        color: "#f0f0f0",
+                      }}
                       onClick={() => setEditing(true)}
                     />
                   </Tooltip>
@@ -159,6 +168,8 @@ export default function PostDetail() {
                       fontWeight: "bold",
                       lineHeight: 1.3,
                       textAlign: "center",
+                      color: "#f0f0f0",
+                      backgroundColor: "#232323",
                     }}
                   />
                 </Form.Item>
@@ -177,6 +188,8 @@ export default function PostDetail() {
                       width: "100%",
                       marginBottom: "0.5rem",
                       textAlign: "center",
+                      color: "#f0f0f0",
+                      backgroundColor: "#232323",
                     }}
                   />
                 </Form.Item>
@@ -196,9 +209,7 @@ export default function PostDetail() {
               </Form>
             ) : (
               <>
-                <Title level={1} className="post-title">
-                  {postQuery.data.title}
-                </Title>
+                <h1 className="post-title">{postQuery.data.title}</h1>
                 <Paragraph className="post-description">
                   {postQuery.data.description}
                 </Paragraph>

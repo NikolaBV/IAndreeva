@@ -43,6 +43,7 @@ export default function PostCard({ id, title, description, createdAt }: Props) {
 
   return (
     <Row
+      className="box"
       style={{
         width: "100%",
         height: "auto",
@@ -68,6 +69,7 @@ export default function PostCard({ id, title, description, createdAt }: Props) {
                 right: "1rem",
                 cursor: "pointer",
                 fontSize: "1.5rem",
+                color: "#fff8f0",
               }}
             />
           </Popconfirm>
@@ -76,12 +78,12 @@ export default function PostCard({ id, title, description, createdAt }: Props) {
 
       <div style={{ display: "flex", flexDirection: "column" }}>
         <Link to={`/post/${id}`}>
-          <Title style={{ color: "black" }} level={2}>
+          <Title style={{ color: "#fff8f0" }} level={2}>
             {title}
           </Title>
         </Link>
-        <Paragraph style={{ color: "black" }}>{description}</Paragraph>
-        <Paragraph style={{ color: "black" }}>
+        <Paragraph style={{ color: "#fff8f0" }}>{description}</Paragraph>
+        <Paragraph style={{ color: "#fff8f0" }}>
           {createdAt.toLocaleString()}
         </Paragraph>
       </div>
