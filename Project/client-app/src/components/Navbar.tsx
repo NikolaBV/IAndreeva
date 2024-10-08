@@ -1,86 +1,64 @@
-import { Button, Menu } from "antd";
-import { Header } from "antd/es/layout/layout";
-import { PlusOutlined } from "@ant-design/icons";
+import { ConfigProvider, Menu, MenuProps } from "antd";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import { useLoginContext } from "../hooks/useLoginContext";
-import { isAdmin, clearToken } from "../utils/tokenUtils";
+import { useState } from "react";
 
 export default function Navbar() {
   const [current, setCurrent] = useState("");
   const navigate = useNavigate();
-  const { loggedIn, setLoggedIn } = useLoginContext();
-  const [isAdminUser, setIsAdminUser] = useState(false);
+  type MenuItem = Required<MenuProps>["items"][number];
 
-  useEffect(() => {
-    if (loggedIn) {
-      setIsAdminUser(isAdmin());
-    }
-    console.log("Logged in status: ", loggedIn);
-  }, [loggedIn]);
-
-  const handleLogout = () => {
-    setLoggedIn(false);
-    clearToken();
-    navigate("/");
-  };
-
-  const menuItems = [
+  const menuItems: MenuItem[] = [
     {
       key: "1",
       label: "Home",
     },
+    {
+      key: "2",
+      label: "About me",
+    },
+    {
+      key: "3",
+      label: "My Work",
+    },
   ];
 
   return (
-    <Header style={{ display: "flex", alignItems: "center" }}>
-      <div className="demo-logo" />
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        items={menuItems}
-        selectedKeys={[current]}
-        style={{ flex: 1, minWidth: 0 }}
-        onClick={(item) => {
-          if (item.key === "1") {
+    <ConfigProvider
+      theme={{
+        components: {
+          Menu: {
+            darkItemBg: "black",
+            darkItemSelectedBg: "black",
+            darkItemSelectedColor: "white",
+          },
+        },
+      }}
+    >
+      <div className="navbar-container">
+        <Menu
+          mode="horizontal"
+          theme="dark"
+          items={menuItems}
+          selectedKeys={[current]}
+          className="menu-items"
+          onClick={(item) => {
             setCurrent(item.key);
-            navigate("/");
-          }
-        }}
-      />
-      {isAdminUser && loggedIn ? (
-        <Button
-          type="primary"
-          icon={<PlusOutlined />}
-          onClick={() => {
-            setCurrent("");
-            navigate("/createPost");
+            switch (item.key) {
+              case "1":
+                navigate("/");
+                break;
+              case "2":
+                navigate("/about-me");
+                break;
+              case "3":
+                navigate("/posts");
+                break;
+              default:
+                break;
+            }
           }}
-        >
-          Create post
-        </Button>
-      ) : null}
-
-      {!loggedIn ? (
-        <Button
-          type="primary"
-          style={{ marginLeft: "1rem" }}
-          onClick={() => {
-            setCurrent("");
-            navigate("/login");
-          }}
-        >
-          Login
-        </Button>
-      ) : (
-        <Button
-          type="primary"
-          style={{ marginLeft: "1rem" }}
-          onClick={handleLogout}
-        >
-          Log out
-        </Button>
-      )}
-    </Header>
+        />
+      </div>
+    </ConfigProvider>
   );
 }

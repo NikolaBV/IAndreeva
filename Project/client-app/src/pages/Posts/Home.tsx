@@ -22,14 +22,8 @@ export default function Posts() {
   }
 
   return (
-    <div style={{ display: "flex", flexDirection: "row" }}>
-      <Col
-        style={{
-          height: "100vh",
-          width: "70%",
-          marginRight: "0.5rem",
-        }}
-      >
+    <div style={{ display: "flex", flexDirection: "row", padding: "1rem" }}>
+      <Col style={{ flex: 1, marginRight: "1rem" }}>
         {postsQuery?.data?.map((post) => (
           <Post
             key={post.id}
@@ -40,7 +34,7 @@ export default function Posts() {
           />
         ))}
       </Col>
-      <Col style={{ width: "30%", height: "100vh" }}></Col>
+      <Col style={{ width: "30%" }}></Col>
     </div>
   );
 }

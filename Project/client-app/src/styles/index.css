@@ -1,99 +1,164 @@
+:root {
+  --primary-color: #232323;
+  --dark-color: #000000;
+  --secondary-color: #2e2e2e;
+  --text-color: #f0f0f0;
+  --text-color-secondary: #f0f0f0c7;
+  --accent-color: #00bfa6;
+  --border-color: #3a3a3a;
+  --highlight-color: #1677ff;
+}
+
+.box {
+  background-color: var(--dark-color);
+}
+.jodit_theme_dark .jodit-wysiwyg {
+  background-color: var(--primary-color) !important;
+  color: var(--text-color);
+}
+.jodit-ui-group {
+  background-color: var(--dark-color);
+}
 html,
 body {
   height: 100%;
   margin: 0;
-  font-family: Arial, sans-serif;
+  background-color: var(--primary-color);
+  font-family: "Inter", sans-serif;
+  color: var(--text-color);
 }
 
+.text-important {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  text-shadow: none;
+  margin: 0.5rem 0;
+  font-family: "Arial", sans-serif; /* Use a system fallback font or optimize web fonts */
+  display: block;
+  line-height: 1.2;
+}
+.text-secondary {
+  text-shadow: 3px 2px 1px rgba(0, 0, 0, 0.08);
+  color: var(--text-color-secondary);
+}
+.navbar-container {
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+}
+
+.menu-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+.container,
+.ant-layout-content,
 .post-detail-container,
 .create-post-container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh;
-  padding: 0 2rem;
-  background-color: #f0f2f5;
+  margin: 0;
+  padding: 0;
+  background-color: var(--primary-color);
 }
 
-.post-detail-content,
-.create-post-form {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
+.post-detail-content {
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: black;
 }
 
 .post-detail-header {
   display: flex;
   justify-content: flex-end;
-  padding: 1rem 0;
+  width: 100%;
+}
+
+.edit-icon .icon-style {
+  font-size: 1.2rem;
+  color: var(--text-color);
+  cursor: pointer;
+  margin-left: 0.5rem;
 }
 
 .post-detail-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 100%;
-  overflow: auto;
+  line-height: 1.8;
 }
 
 .post-title {
-  text-align: center;
+  color: var(--text-color);
+  font-weight: bold;
+  text-align: left;
+  margin-bottom: 1rem;
+  font-size: 2rem;
 }
 
 .post-description {
-  text-align: center;
-  margin-bottom: 1rem;
+  text-align: left;
+  color: var(--text-color);
+  margin-bottom: 1.5rem;
+  font-size: 1.25rem;
 }
 
 .post-content {
   width: 100%;
+  background: transparent;
+  margin: 1rem 0;
   padding: 1rem;
-  overflow-y: auto;
-  background: white;
-  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
-  border-radius: 4px;
-}
-
-.create-post-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 2rem;
-  width: 100%;
+  border: none;
+  color: var(--text-color);
 }
 
 input,
-textarea {
+textarea,
+.ant-input {
   width: 100%;
-}
-.post-detail-loading {
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-  padding: 2rem;
-  background-color: #f0f2f5;
-}
-
-.post-detail-header {
-  display: flex;
-  justify-content: flex-end;
-  padding: 1rem 0;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: var(--primary-color);
+  color: var(--text-color);
+  margin: 0.5rem 0;
+  transition: border-color 0.3s ease;
 }
 
-.post-detail-body {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  overflow: auto;
+input:focus,
+textarea:focus,
+.ant-input:focus {
+  border-color: var(--accent-color);
+  outline: none;
 }
 
-.post-detail-body .ant-skeleton-paragraph {
-  width: 100%;
-  max-width: 800px;
+button,
+.ant-btn-primary {
+  background-color: var(--accent-color);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.75rem 1.5rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: bold;
+  text-transform: uppercase;
 }
 
-.ant-skeleton-button {
-  margin: 0;
+.ant-skeleton-button,
+.save-button {
+  background: var(--secondary-color);
+  border-radius: 8px;
+}
+
+.popconfirm-btn,
+.delete-icon {
+  color: var(--accent-color);
+  cursor: pointer;
+}
+
+.tooltip {
+  background-color: var(--secondary-color);
+  color: var(--text-color);
 }
