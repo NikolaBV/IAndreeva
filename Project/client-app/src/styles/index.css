@@ -1,10 +1,12 @@
 :root {
-  --primary-color: #232323; /* Dark background for a modern look */
+  --primary-color: #232323;
   --dark-color: #000000;
-  --secondary-color: #2e2e2e; /* Slightly lighter gray for secondary elements */
-  --text-color: #f0f0f0; /* Light text color for readability on dark backgrounds */
-  --accent-color: #00bfa6; /* Teal color for accents like buttons and links */
+  --secondary-color: #2e2e2e;
+  --text-color: #f0f0f0;
+  --text-color-secondary: #f0f0f0c7;
+  --accent-color: #00bfa6;
   --border-color: #3a3a3a;
+  --highlight-color: #1677ff;
 }
 
 .box {
@@ -22,10 +24,37 @@ body {
   height: 100%;
   margin: 0;
   background-color: var(--primary-color);
-  font-family: "Inter", sans-serif; /* Clean and modern font */
+  font-family: "Inter", sans-serif;
   color: var(--text-color);
 }
 
+.text-important {
+  font-size: 2.2rem;
+  font-weight: bold;
+  color: var(--text-color);
+  text-shadow: none;
+  margin: 0.5rem 0;
+  font-family: "Arial", sans-serif; /* Use a system fallback font or optimize web fonts */
+  display: block;
+  line-height: 1.2;
+}
+.text-secondary {
+  text-shadow: 3px 2px 1px rgba(0, 0, 0, 0.08);
+  color: var(--text-color-secondary);
+}
+.navbar-container {
+  width: 100vw;
+  background-color: black;
+  display: flex;
+  justify-content: center;
+}
+
+.menu-items {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
 .container,
 .ant-layout-content,
 .post-detail-container,
@@ -36,15 +65,15 @@ body {
 }
 
 .post-detail-content {
-  max-width: 800px; /* Limit the width for better readability */
-  margin: 2rem auto; /* Center the content horizontally */
-  padding: 2rem; /* Add padding around the article */
+  max-width: 800px;
+  margin: 2rem auto;
+  padding: 2rem;
   background-color: black;
 }
 
 .post-detail-header {
   display: flex;
-  justify-content: flex-end; /* Align icons to the right */
+  justify-content: flex-end;
   width: 100%;
 }
 
@@ -57,19 +86,19 @@ body {
 
 .post-detail-body {
   width: 100%;
-  line-height: 1.8; /* Increase line height for readability */
+  line-height: 1.8;
 }
 
 .post-title {
   color: var(--text-color);
   font-weight: bold;
-  text-align: left; /* Align title to the left */
+  text-align: left;
   margin-bottom: 1rem;
   font-size: 2rem;
 }
 
 .post-description {
-  text-align: left; /* Align description to the left */
+  text-align: left;
   color: var(--text-color);
   margin-bottom: 1.5rem;
   font-size: 1.25rem;
@@ -77,11 +106,11 @@ body {
 
 .post-content {
   width: 100%;
-  background: transparent; /* Remove background color for a cleaner article look */
+  background: transparent;
   margin: 1rem 0;
   padding: 1rem;
-  border: none; /* Remove border to enhance article feel */
-  color: var(--text-color); /* Ensure text is readable */
+  border: none;
+  color: var(--text-color);
 }
 
 input,

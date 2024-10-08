@@ -34,32 +34,26 @@ export default function Navbar() {
         },
       }}
     >
-      <div>
+      <div className="navbar-container">
         <Menu
           mode="horizontal"
           theme="dark"
           items={menuItems}
           selectedKeys={[current]}
-          style={{
-            display: "flex",
-            justifyContent: "center",
-            alignContent: "center",
-            minWidth: 0,
-            padding: "0.5rem 0 0.5rem 0",
-          }}
+          className="menu-items"
           onClick={(item) => {
+            setCurrent(item.key);
             switch (item.key) {
               case "1":
-                setCurrent(item.key);
                 navigate("/");
                 break;
               case "2":
-                setCurrent(item.key);
                 navigate("/about-me");
                 break;
               case "3":
-                setCurrent(item.key);
                 navigate("/posts");
+                break;
+              default:
                 break;
             }
           }}
