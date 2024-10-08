@@ -12,6 +12,7 @@ import HtmlEditor from "./HtmlEditor";
 import PostDetailLoading from "./components/PostLoading";
 import { isAdmin } from "../../utils/tokenUtils";
 import { useLoginContext } from "../../hooks/useLoginContext";
+import { EditPostModel, PostModel } from "../../api/models";
 
 export default function PostDetail() {
   const params = useParams<{ id: string }>();
@@ -90,13 +91,15 @@ export default function PostDetail() {
     }
   }, [postQuery.data]);
 
-  const handleSaveChanges = (values: any) => {
-    editPost.mutate({
+  const handleSaveChanges = (values: EditPostModel) => {
+    const model: EditPostModel = {
       id: postQuery.data?.id,
       title: values.title,
       description: values.description,
       htmlContent: content,
-    });
+      updatedAt: new Date(),
+    };
+    editPost.mutate(model);
 
     setEditing(false);
   };

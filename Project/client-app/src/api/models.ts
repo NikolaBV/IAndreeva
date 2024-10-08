@@ -21,6 +21,7 @@ export interface EditPostModel {
   title: string;
   description: string;
   htmlContent: string;
+  updatedAt: Date;
 }
 export interface User {
   username: string;
@@ -53,5 +54,15 @@ export class PaginatedResult<T> {
   constructor(data: T, pagination: Pagination) {
     this.data = data;
     this.pagination = pagination;
+  }
+}
+
+export class PagingParams {
+  pageNumber;
+  pageSize;
+
+  constructor(pageNumber = 1, pageSize = 2) {
+    this.pageNumber = pageNumber;
+    this.pageSize = pageSize;
   }
 }

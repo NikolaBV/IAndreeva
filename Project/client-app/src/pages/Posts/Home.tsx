@@ -1,38 +1,67 @@
-import { useQuery } from "@tanstack/react-query";
 import { Col, Spin } from "antd";
+import { useEffect, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import agent from "../../api/agent";
 import Post from "./components/PostCard";
-import { useEffect } from "react";
-import { getRoles } from "../../utils/tokenUtils";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export default function Posts() {
-  const postsQuery = useQuery({
+  const { ref, inView } = useInView();
+  const [allPosts, setAllPosts] = useState([]);
+
+  const infiniteQuery = useInfiniteQuery({
     queryKey: ["posts"],
-    queryFn: async () => agent.Posts.list(),
+    queryFn: ({ pageParam = 1 }) => agent.Posts.list(pageParam, 2),
+    getNextPageParam: (lastPage, allPages) => {
+      const maxPages = lastPage.pagination.totalPages;
+      const nextPage = lastPage.pagination.currentPage + 1;
+      return nextPage <= maxPages ? nextPage : undefined;
+    },
     refetchOnWindowFocus: false,
     retry: false,
   });
 
   useEffect(() => {
-    console.log("Roles: " + getRoles());
-  }, []);
+    if (infiniteQuery.isSuccess) {
+      const allFetchedPosts = infiniteQuery.data.pages.flatMap(
+        (page) => page.data
+      );
+      setAllPosts(allFetchedPosts);
+    }
+  }, [infiniteQuery.data]);
 
-  if (postsQuery.isLoading) {
-    return <Spin spinning={postsQuery.isLoading} fullscreen></Spin>;
+  useEffect(() => {
+    if (
+      inView &&
+      infiniteQuery.hasNextPage &&
+      !infiniteQuery.isFetchingNextPage
+    ) {
+      infiniteQuery.fetchNextPage();
+    }
+  }, [inView, infiniteQuery.hasNextPage, infiniteQuery.isFetchingNextPage]);
+
+  if (infiniteQuery.isLoading) {
+    return <Spin spinning={infiniteQuery.isLoading} fullscreen></Spin>;
   }
 
   return (
     <div style={{ display: "flex", flexDirection: "row", padding: "1rem" }}>
       <Col style={{ flex: 1, marginRight: "1rem" }}>
-        {postsQuery?.data?.map((post) => (
+        {allPosts.map((post) => (
           <Post
             key={post.id}
             id={post.id}
             title={post.title}
             description={post.description}
-            createdAt={new Date(post.createdAt)}
+            updatedAt={new Date(post.updatedAt)}
           />
         ))}
+        <div
+          ref={ref}
+          style={{ marginTop: "1rem", width: "100%", textAlign: "center" }}
+        >
+          {infiniteQuery.isFetchingNextPage && <Spin />}
+        </div>
       </Col>
       <Col style={{ width: "30%" }}></Col>
     </div>

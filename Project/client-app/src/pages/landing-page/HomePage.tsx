@@ -28,8 +28,9 @@ export default function HomePage() {
                   padding: "2rem",
                 }}
               >
-                <h1 className="text-important">All of my work in one place</h1>
-                <h2 className="text-secondary">Check it out</h2>
+                <h1 className="text-important" style={{ marginBottom: "2rem" }}>
+                  All of my work in one place
+                </h1>
                 <Button type="primary" onClick={handleGoToPosts}>
                   Go to posts
                 </Button>
@@ -46,8 +47,8 @@ export default function HomePage() {
                     width: "100%",
                     maxWidth: "480px",
                     height: "auto",
+                    minHeight: "360px",
                     borderRadius: "8px",
-                    boxShadow: "0 4px 8px rgba(0, 0, 0, 0.2)",
                   }}
                 />
               </div>
