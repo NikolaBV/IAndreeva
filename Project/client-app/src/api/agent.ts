@@ -3,6 +3,7 @@ import {
   CreatePostModel,
   EditPostModel,
   LoginModel,
+  PaginatedResult,
   PostModel,
   RegisterModel,
   User,
@@ -21,7 +22,14 @@ axios.interceptors.request.use((config) => {
 });
 axios.interceptors.response.use(
   async (response) => {
-    return response;
+    const pagination = response.headers["pagination"];
+    if (pagination) {
+      response.data = new PaginatedResult(
+        response.data,
+        JSON.parse(pagination)
+      );
+    }
+    return response as AxiosResponse<PaginatedResult<unknown>>;
   },
   (error: AxiosError) => {
     const { status } = error.response!;
@@ -52,13 +60,17 @@ const reqests = {
 };
 
 const Posts = {
-  list: () => reqests.get<PostModel[]>("/posts"),
+  list: (pageNumber: number, pageSize: number) =>
+    reqests.get<PaginatedResult<PostModel[]>>(
+      `/posts?pageNumber=${pageNumber}&pageSize=${pageSize}`
+    ),
   details: (id: string) => reqests.get<PostModel>(`/posts/${id}`),
   create: (post: CreatePostModel) => reqests.post<string>("/posts", post),
   edit: (id: string, post: {}) =>
     reqests.put<EditPostModel>(`/posts/${id}`, post),
   delete: (id: string) => reqests.delete<PostModel>(`/posts/${id}`),
 };
+
 const Account = {
   current: () => reqests.get<User>("/account"),
   login: (user: LoginModel) => reqests.post<User>("/account/login", user),

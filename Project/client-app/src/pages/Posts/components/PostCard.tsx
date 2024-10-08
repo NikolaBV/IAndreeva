@@ -14,9 +14,10 @@ interface Props {
   title: string;
   description: string;
   createdAt: Date;
+  updatedAt: Date;
 }
 
-export default function PostCard({ id, title, description, createdAt }: Props) {
+export default function PostCard({ id, title, description, updatedAt }: Props) {
   const queryClient = useQueryClient();
   const { loggedIn, setLoggedIn } = useLoginContext();
   const [isAdminUser, setIsAdminUser] = useState(false);
@@ -84,7 +85,7 @@ export default function PostCard({ id, title, description, createdAt }: Props) {
         </Link>
         <Paragraph style={{ color: "#fff8f0" }}>{description}</Paragraph>
         <Paragraph style={{ color: "#fff8f0" }}>
-          {createdAt.toLocaleString()}
+          {updatedAt.toLocaleString()}
         </Paragraph>
       </div>
     </Row>
