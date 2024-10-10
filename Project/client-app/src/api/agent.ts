@@ -11,7 +11,7 @@ import {
 import { message } from "antd";
 import { getToken } from "../utils/tokenUtils";
 
-axios.defaults.baseURL = "http://localhost:5000/api";
+axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 const responseBody = <T>(response: AxiosResponse<T>) => response.data;
 axios.interceptors.request.use((config) => {
   const token = getToken();

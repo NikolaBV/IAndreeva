@@ -6,9 +6,7 @@ namespace Persistence
 {
     public class DataContext : IdentityDbContext<AppUser>
     {
-        public DataContext(DbContextOptions options) : base(options)
-        {
-        }
+        public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         public DbSet<Post> Posts { get; set; }
     }

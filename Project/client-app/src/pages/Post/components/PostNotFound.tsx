@@ -1,5 +1,4 @@
 import { Button } from "antd";
-import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
 import { useNavigate } from "react-router-dom";
 
