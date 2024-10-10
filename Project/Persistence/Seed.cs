@@ -6,36 +6,41 @@ namespace Persistence
     public class Seed
     {
         public static async Task SeedData(DataContext context,
-        UserManager<AppUser> userManager,
-        RoleManager<IdentityRole> roleManager)
+            UserManager<AppUser> userManager,
+            RoleManager<IdentityRole> roleManager)
         {
             if (!roleManager.Roles.Any())
             {
                 await roleManager.CreateAsync(new IdentityRole("Admin"));
                 await roleManager.CreateAsync(new IdentityRole("User"));
             }
+
             if (!userManager.Users.Any())
             {
+                var adminEmail = Environment.GetEnvironmentVariable("AdminEmail");
+                var adminPassword = Environment.GetEnvironmentVariable("AdminPassword");
+
                 var regularUser = new AppUser
                 {
                     DisplayName = "Koko",
                     UserName = "NikolaBV",
                     Email = "nikolavalkovb@gmail.com"
                 };
+
                 var adminUser = new AppUser
                 {
                     DisplayName = "Ivana",
                     UserName = "IvanaAndreeva",
-                    Email = "ivanandrv@gmail.com"
+                    Email = adminEmail
                 };
 
-                await userManager.CreateAsync(adminUser, "Pa$$w0rd");
+                await userManager.CreateAsync(adminUser, adminPassword);
                 await userManager.CreateAsync(regularUser, "regulerU$3r");
 
                 await userManager.AddToRoleAsync(adminUser, "Admin");
                 await userManager.AddToRoleAsync(regularUser, "User");
-
             }
+
             if (context.Posts.Any()) return;
 
             var posts = new List<Post>
@@ -131,6 +136,7 @@ namespace Persistence
                     UpdatedAt = new DateTime(2024, 1, 20)
                 }
             };
+
             await context.Posts.AddRangeAsync(posts);
             await context.SaveChangesAsync();
         }
