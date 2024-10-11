@@ -34,7 +34,7 @@ body {
   color: var(--text-color);
   text-shadow: none;
   margin: 0.5rem 0;
-  font-family: "Arial", sans-serif; /* Use a system fallback font or optimize web fonts */
+  font-family: "Arial", sans-serif;
   display: block;
   line-height: 1.2;
 }

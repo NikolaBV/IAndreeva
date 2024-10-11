@@ -48,15 +48,24 @@ export default function LoginForm() {
         flexDirection: "column",
       }}
     >
+      <h1 className="text-important">Sign In</h1>
       <Form
         onFinish={handleSubmit}
         style={{ display: "flex", flexDirection: "column" }}
       >
         <Form.Item name="email" rules={[{ required: true, type: "email" }]}>
-          <Input id="email" placeholder="Email" />
+          <Input
+            id="email"
+            placeholder="Email"
+            style={{ backgroundColor: "#f0f0f0" }}
+          />
         </Form.Item>
         <Form.Item name="password" rules={[{ required: true }]}>
-          <Input.Password id="password" placeholder="Password" />
+          <Input.Password
+            id="password"
+            placeholder="Password"
+            style={{ backgroundColor: "#f0f0f0" }}
+          />
         </Form.Item>
         <Link style={{ margin: "0 0 1rem 0" }} to={"/register"}>
           Sign Up
