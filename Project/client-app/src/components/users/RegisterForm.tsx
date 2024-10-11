@@ -38,21 +38,38 @@ export default function RegisterForm() {
         flexDirection: "column",
       }}
     >
+      <h1 className="text-important">Sign Up</h1>
       <Form
         onFinish={handleSubmit}
         style={{ display: "flex", flexDirection: "column" }}
       >
         <Form.Item name="email" rules={[{ required: true, type: "email" }]}>
-          <Input id="email" placeholder="Email" />
+          <Input
+            id="email"
+            placeholder="Email"
+            style={{ backgroundColor: "#f0f0f0" }}
+          />
         </Form.Item>
         <Form.Item name="password" rules={[{ required: true }]}>
-          <Input.Password id="password" placeholder="Password" />
+          <Input.Password
+            id="password"
+            placeholder="Password"
+            style={{ backgroundColor: "#f0f0f0" }}
+          />
         </Form.Item>
         <Form.Item name="displayName" rules={[{ required: true }]}>
-          <Input id="displayName" placeholder="Display Name" />
+          <Input
+            id="displayName"
+            placeholder="Display Name"
+            style={{ backgroundColor: "#f0f0f0" }}
+          />
         </Form.Item>
         <Form.Item name="username" rules={[{ required: true }]}>
-          <Input id="username" placeholder="Username" />
+          <Input
+            id="username"
+            placeholder="Username"
+            style={{ backgroundColor: "#f0f0f0" }}
+          />
         </Form.Item>
         <Button htmlType="submit">Sign Up</Button>
       </Form>
