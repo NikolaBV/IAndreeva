@@ -34,7 +34,7 @@ export default function LoginForm() {
       navigate("/");
     },
     onError: (error) => {
-      message.error("Login failed. Please try again.");
+      message.error("Login failed. Please try again." + error.message);
     },
   });
 

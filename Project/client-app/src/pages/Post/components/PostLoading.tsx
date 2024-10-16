@@ -1,4 +1,4 @@
-import { Skeleton } from "antd";
+import Skeleton from "antd/es/skeleton";
 
 export default function PostDetailLoading() {
   return (
