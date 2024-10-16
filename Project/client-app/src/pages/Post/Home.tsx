@@ -1,7 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useState, useMemo, useEffect, useRef } from "react";
-import { CloseOutlined, EditOutlined } from "@ant-design/icons";
+import {
+  CloseOutlined,
+  EditOutlined,
+  LeftCircleOutlined,
+} from "@ant-design/icons";
 import Form from "antd/es/form";
 import Input from "antd/es/input";
 import Tooltip from "antd/es/tooltip";
@@ -20,6 +24,7 @@ import { EditPostModel, PostModel } from "../../api/models";
 export default function PostDetail() {
   const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
   const [editing, setEditing] = useState(false);
   const [content, setContent] = useState<string>("");
   const { loggedIn } = useLoginContext();
@@ -43,6 +48,10 @@ export default function PostDetail() {
     },
     onSuccess: () => queryClient.invalidateQueries(["post"]),
   });
+
+  const handleGoBackClick = () => {
+    navigate("/posts");
+  };
 
   const editor = useRef<any>(null);
 
@@ -102,33 +111,47 @@ export default function PostDetail() {
       ) : postQuery.data ? (
         <div className="post-detail-content">
           <div className="post-detail-header">
-            {isAdminUser && (
-              <span className="edit-icon">
-                {editing ? (
-                  <Tooltip title="Stop editing">
-                    <CloseOutlined
-                      style={{
-                        cursor: "pointer",
-                        fontSize: "1.5rem",
-                        color: "#f0f0f0",
-                      }}
-                      onClick={() => setEditing(false)}
-                    />
-                  </Tooltip>
-                ) : (
-                  <Tooltip title="Edit">
-                    <EditOutlined
-                      style={{
-                        cursor: "pointer",
-                        fontSize: "1.5rem",
-                        color: "#f0f0f0",
-                      }}
-                      onClick={() => setEditing(true)}
-                    />
-                  </Tooltip>
-                )}
-              </span>
-            )}
+            <div className="header-left" onClick={handleGoBackClick}>
+              <Tooltip title="Go Back">
+                <LeftCircleOutlined
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "1.5rem",
+                    color: "#fff8f0",
+                  }}
+                />
+              </Tooltip>
+            </div>
+
+            <div className="header-right">
+              {isAdminUser && (
+                <span className="edit-icon">
+                  {editing ? (
+                    <Tooltip title="Stop editing">
+                      <CloseOutlined
+                        style={{
+                          cursor: "pointer",
+                          fontSize: "1.5rem",
+                          color: "#f0f0f0",
+                        }}
+                        onClick={() => setEditing(false)}
+                      />
+                    </Tooltip>
+                  ) : (
+                    <Tooltip title="Edit">
+                      <EditOutlined
+                        style={{
+                          cursor: "pointer",
+                          fontSize: "1.5rem",
+                          color: "#f0f0f0",
+                        }}
+                        onClick={() => setEditing(true)}
+                      />
+                    </Tooltip>
+                  )}
+                </span>
+              )}
+            </div>
           </div>
           <div className="post-detail-body">
             {editing ? (
