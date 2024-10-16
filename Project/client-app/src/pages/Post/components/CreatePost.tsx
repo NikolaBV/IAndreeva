@@ -1,9 +1,8 @@
 import { useMutation } from "@tanstack/react-query";
-import { Button, Form, Input, message } from "antd";
+import { Button, Form, Input, message } from "antd/es";
 import JoditEditor from "jodit-react";
 import { useMemo, useRef, useState } from "react";
 import { CreatePostModel } from "../../../api/models";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import "../../../styles/index.css";
 import agent from "../../../api/agent";
@@ -17,9 +16,7 @@ export default function CreatePost() {
     () => ({
       readonly: false,
       toolbarSticky: false,
-      toolbarAdaptive: false,
-      showPlaceholder: false,
-      toolbarButtonSize: "middle" as const,
+      toolbarButtonSize: "middle",
       buttons: [
         "bold",
         "|",
@@ -40,38 +37,29 @@ export default function CreatePost() {
         "link",
         "|",
         "image",
-        "|",
       ],
     }),
     []
   );
 
-  type FormValues = Omit<CreatePostModel, "htmlContent"> & {
-    htmlContent: string;
-  };
-
-  const onFinish = (values: FormValues) => {
-    createPost.mutate({
-      title: values.title,
-      description: values.description,
-      htmlContent: values.htmlContent,
-    });
-    message.success("Post created successfully");
-  };
-
   const createPost = useMutation({
-    mutationKey: ["createPost"],
-    mutationFn: (model: CreatePostModel) => {
-      return agent.Posts.create(model);
-    },
+    mutationFn: (model: CreatePostModel) => agent.Posts.create(model),
     onSuccess: (response) => {
       navigate(`/post/${response}`);
+      message.success("Post created successfully");
     },
   });
 
+  const onFinish = (values: CreatePostModel) => {
+    createPost.mutate({
+      ...values,
+      htmlContent: content,
+    });
+  };
+
   return (
     <div className="create-post-container">
-      <Form<FormValues> onFinish={onFinish} autoComplete="off">
+      <Form onFinish={onFinish} autoComplete="off">
         <Form.Item
           name="title"
           rules={[{ required: true, message: "Title is required" }]}
@@ -80,8 +68,8 @@ export default function CreatePost() {
             placeholder="Give it a title"
             style={{
               fontSize: "20px",
-              width: "100%",
-              marginBottom: "0.5rem",
+              color: "#f0f0f0",
+              backgroundColor: "#232323",
             }}
           />
         </Form.Item>
@@ -91,19 +79,15 @@ export default function CreatePost() {
         >
           <Input.TextArea
             placeholder="Describe it"
-            style={{
-              fontSize: "20px",
-              width: "100%",
-              marginBottom: "0.5rem",
-            }}
+            style={{ fontSize: "20px", marginBottom: "0.5rem" }}
           />
         </Form.Item>
-        <Form.Item name="htmlContent" initialValue={content}>
+        <Form.Item name="htmlContent">
           <JoditEditor
             ref={editor}
             value={content}
             config={config}
-            onBlur={(newContent) => setContent(newContent)}
+            onBlur={setContent}
           />
         </Form.Item>
         <Button type="primary" htmlType="submit">

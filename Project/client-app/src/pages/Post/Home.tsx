@@ -1,8 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
-import { useState, useMemo, useRef, useEffect } from "react";
+import { useState, useMemo, useEffect, useRef } from "react";
 import { CloseOutlined, EditOutlined } from "@ant-design/icons";
-import { Form, Input, Tooltip, Button } from "antd";
+import Form from "antd/es/form";
+import Input from "antd/es/input";
+import Tooltip from "antd/es/tooltip";
+import Button from "antd/es/button";
 import Paragraph from "antd/es/typography/Paragraph";
 import parse from "html-react-parser";
 import "../../styles/index.css";
@@ -15,38 +18,30 @@ import { useLoginContext } from "../../hooks/useLoginContext";
 import { EditPostModel, PostModel } from "../../api/models";
 
 export default function PostDetail() {
-  const params = useParams<{ id: string }>();
+  const { id } = useParams<{ id: string }>();
   const queryClient = useQueryClient();
   const [editing, setEditing] = useState(false);
   const [content, setContent] = useState<string>("");
-  const { loggedIn, setLoggedIn } = useLoginContext();
+  const { loggedIn } = useLoginContext();
   const [isAdminUser, setIsAdminUser] = useState(false);
 
   useEffect(() => {
-    if (loggedIn) {
-      setIsAdminUser(isAdmin());
-    }
-    console.log("Logged in status: ", loggedIn);
+    if (loggedIn) setIsAdminUser(isAdmin());
   }, [loggedIn]);
 
   const postQuery = useQuery({
-    queryKey: ["post", params.id],
-    queryFn: () => agent.Posts.details(params.id as string),
-    onSuccess: (data: PostModel) => {
-      setContent(data.htmlContent);
-    },
+    queryKey: ["post", id],
+    queryFn: () => agent.Posts.details(id as string),
+    onSuccess: (data: PostModel) => setContent(data.htmlContent),
     retry: false,
     refetchOnWindowFocus: false,
   });
 
   const editPost = useMutation({
-    mutationKey: ["editPost"],
     mutationFn: async (model: EditPostModel) => {
       await agent.Posts.edit(model.id, model);
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["post"] });
-    },
+    onSuccess: () => queryClient.invalidateQueries(["post"]),
   });
 
   const editor = useRef<any>(null);
@@ -55,10 +50,8 @@ export default function PostDetail() {
     () => ({
       readonly: false,
       toolbarSticky: false,
-      toolbarAdaptive: false,
       showPlaceholder: false,
       theme: "dark",
-      toolbarButtonSize: "middle" as const,
       buttons: [
         "bold",
         "|",
@@ -79,49 +72,33 @@ export default function PostDetail() {
         "link",
         "|",
         "image",
-        "|",
       ],
     }),
     []
   );
 
-  useEffect(() => {
-    if (postQuery.data) {
-      setContent(postQuery.data.htmlContent);
-    }
-  }, [postQuery.data]);
-
   const handleSaveChanges = (values: EditPostModel) => {
-    const model: EditPostModel = {
+    editPost.mutate({
       id: postQuery.data?.id,
       title: values.title,
       description: values.description,
       htmlContent: content,
       updatedAt: new Date(),
-    };
-    editPost.mutate(model);
-
+    });
     setEditing(false);
   };
 
   if (postQuery.isError) {
-    console.log(postQuery.error.response.status);
-    if (
-      postQuery.error.response.status === 404 ||
-      postQuery.error.response.status === 400
-    ) {
-      return (
-        <div>
-          <PostNotFound />
-        </div>
-      );
+    const { status } = postQuery.error.response;
+    if (status === 404 || status === 400) {
+      return <PostNotFound />;
     }
   }
 
   return (
     <div className="post-detail-container">
       {postQuery.isLoading ? (
-        <PostDetailLoading></PostDetailLoading>
+        <PostDetailLoading />
       ) : postQuery.data ? (
         <div className="post-detail-content">
           <div className="post-detail-header">
@@ -165,17 +142,14 @@ export default function PostDetail() {
                     autoSize={{ minRows: 1, maxRows: 5 }}
                     style={{
                       fontSize: "32px",
-                      width: "100%",
                       marginBottom: "0.5rem",
                       fontWeight: "bold",
-                      lineHeight: 1.3,
                       textAlign: "center",
                       color: "#f0f0f0",
                       backgroundColor: "#232323",
                     }}
                   />
                 </Form.Item>
-
                 <Form.Item
                   name="description"
                   initialValue={postQuery.data.description}
@@ -187,7 +161,6 @@ export default function PostDetail() {
                     autoSize={{ minRows: 3, maxRows: 7 }}
                     style={{
                       fontSize: "20px",
-                      width: "100%",
                       marginBottom: "0.5rem",
                       textAlign: "center",
                       color: "#f0f0f0",
@@ -195,7 +168,6 @@ export default function PostDetail() {
                     }}
                   />
                 </Form.Item>
-
                 <Form.Item name="htmlContent">
                   <HtmlEditor
                     editor={editor}
@@ -204,7 +176,6 @@ export default function PostDetail() {
                     setContent={setContent}
                   />
                 </Form.Item>
-
                 <Button type="primary" htmlType="submit">
                   Save Changes
                 </Button>

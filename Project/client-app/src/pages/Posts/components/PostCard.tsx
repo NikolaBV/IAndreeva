@@ -1,4 +1,4 @@
-import { Popconfirm, Row, Tooltip } from "antd";
+import { Popconfirm, Row, Tooltip } from "antd/es";
 import Paragraph from "antd/es/typography/Paragraph";
 import Title from "antd/es/typography/Title";
 import { Link } from "react-router-dom";
@@ -13,19 +13,18 @@ interface Props {
   id: string;
   title: string;
   description: string;
-  createdAt: Date;
   updatedAt: Date;
 }
 
 export default function PostCard({ id, title, description, updatedAt }: Props) {
   const queryClient = useQueryClient();
-  const { loggedIn, setLoggedIn } = useLoginContext();
+  const { loggedIn } = useLoginContext();
   const [isAdminUser, setIsAdminUser] = useState(false);
+
   useEffect(() => {
     if (loggedIn) {
       setIsAdminUser(isAdmin());
     }
-    console.log("Logged in status: ", loggedIn);
   }, [loggedIn]);
 
   const deletePost = useMutation({

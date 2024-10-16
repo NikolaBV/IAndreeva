@@ -1,9 +1,9 @@
 import { useMutation } from "@tanstack/react-query";
 import { Button, Form, Input, message } from "antd";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { RegisterModel, User } from "../../api/models";
 import agent from "../../api/agent";
-import { getRoles, setToken } from "../../utils/tokenUtils";
+import { setToken } from "../../utils/tokenUtils";
 import { useLoginContext } from "../../hooks/useLoginContext";
 
 export default function RegisterForm() {

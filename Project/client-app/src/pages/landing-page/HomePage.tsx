@@ -39,7 +39,7 @@ export default function HomePage() {
             <Col style={{ width: "50%" }}>
               <div style={{ margin: "3rem" }}>
                 <Image
-                  src="/newpaper.jpg"
+                  src="/newpaper.webp"
                   preview={false}
                   loading="lazy"
                   style={{
