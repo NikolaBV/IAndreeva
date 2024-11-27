@@ -1,20 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\Domain.csproj": {}
+    "D:\\Programming\\Web Applications\\IAndreeva\\Project\\Domain\\Domain.csproj": {}
   },
   "projects": {
-    "E:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\Domain.csproj": {
+    "D:\\Programming\\Web Applications\\IAndreeva\\Project\\Domain\\Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\Domain.csproj",
+        "projectUniqueName": "D:\\Programming\\Web Applications\\IAndreeva\\Project\\Domain\\Domain.csproj",
         "projectName": "Domain",
-        "projectPath": "E:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\Domain.csproj",
+        "projectPath": "D:\\Programming\\Web Applications\\IAndreeva\\Project\\Domain\\Domain.csproj",
         "packagesPath": "C:\\Users\\nikol\\.nuget\\packages\\",
-        "outputPath": "E:\\Programming\\Web applications\\IAndreeva\\Project\\Domain\\obj\\",
+        "outputPath": "D:\\Programming\\Web Applications\\IAndreeva\\Project\\Domain\\obj\\",
         "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
         "configFilePaths": [
           "C:\\Users\\nikol\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -38,8 +42,9 @@
         "restoreAuditProperties": {
           "enableAudit": "true",
           "auditLevel": "low",
-          "auditMode": "direct"
-        }
+          "auditMode": "all"
+        },
+        "SdkAnalysisLevel": "9.0.100"
       },
       "frameworks": {
         "net8.0": {
@@ -66,7 +71,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.100/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
