@@ -20,9 +20,11 @@ jobs:
 
       - name: Build with dotnet
         run: dotnet build --configuration Release
+        working-directory: .
 
       - name: dotnet publish
         run: dotnet publish -c release -o ${{ runner.temp }}/myapp
+        working-directory: .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4
@@ -58,4 +60,4 @@ jobs:
         with:
           app-name: "IAndreeva"
           slot-name: "Production"
-          package: .
+          package: ${{ runner.temp }}/myapp

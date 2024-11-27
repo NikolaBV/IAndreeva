@@ -1,0 +1,14 @@
+{
+  "profiles": {
+    "API": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "AdminEmail": "ivanandrv@gmail.com",
+        "AdminPassword": "Admin@1234"
+      },
+      "applicationUrl": "https://localhost:5000"
+    }
+  }
+}
